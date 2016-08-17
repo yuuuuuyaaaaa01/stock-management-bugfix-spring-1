@@ -3,7 +3,7 @@
 <body>
 <div class="container">
 	<c:out value="${member.name}"/>さん　こんにちは！<br>
-	<a href="/logout/sessionInvalidate">ログアウト</a>
+	<a href="${pageContext.request.contextPath}/logout/sessionInvalidate">ログアウト</a>
 	<h3>書籍一覧</h3>
 	<div class="span8">
 		<div class="row">
@@ -15,7 +15,7 @@
 			  <c:forEach var="book" items="${bookList}">
 			  <tr>
 			    <td>
-			      <a href="/book/show/${book.id}"><c:out value="${book.name}" /></a>
+			      <a href="${pageContext.request.contextPath}/book/show/${book.id}"><c:out value="${book.name}" /></a>
 			    </td>
 			    <td><c:out value="${book.stock}"/></td>
 			  </tr>

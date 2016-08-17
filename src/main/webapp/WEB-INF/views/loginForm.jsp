@@ -6,7 +6,7 @@
 		<img src="img/logo.gif" >
 		<div class="row">
 		<form:errors path="loginForm.*" />
-		<form:form modelAttribute="loginForm" action="/login">
+		<form:form modelAttribute="loginForm" action="${pageContext.request.contextPath}/login">
 			<table class="table table-striped">
 			  <tr>
 			    <th>
