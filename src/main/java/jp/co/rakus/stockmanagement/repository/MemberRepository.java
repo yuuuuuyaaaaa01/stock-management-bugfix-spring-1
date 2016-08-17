@@ -38,7 +38,7 @@ public class MemberRepository {
 	 * @param password パスワード
 	 * @return メンバー情報.メンバーが存在しない場合はnull.
 	 */
-	public Member findByMailAddressAndMember(String mailAddress, String password) {
+	public Member findByMailAddressAndPassword(String mailAddress, String password) {
 		SqlParameterSource param = new MapSqlParameterSource();
 		Member member = null;
 		try{
