@@ -1,17 +1,16 @@
 package jp.co.rakus.stockmanagement.web;
 
-import jp.co.rakus.stockmanagement.domain.Member;
-import jp.co.rakus.stockmanagement.service.MemberService;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.rakus.stockmanagement.domain.Member;
+import jp.co.rakus.stockmanagement.service.MemberService;
 
 /**
  * メンバー関連処理を行うコントローラー.
