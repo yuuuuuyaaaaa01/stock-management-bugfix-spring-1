@@ -2,8 +2,6 @@ package jp.co.rakus.stockmanagement.web;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
-
 /**
  * 書籍関連のリクエストパラメータが入るフォーム.
  * @author igamasayuki
