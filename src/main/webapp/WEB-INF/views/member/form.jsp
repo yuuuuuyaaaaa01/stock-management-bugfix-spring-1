@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../common/common.jsp"  %>
 <body>
 <div class="container">
@@ -12,6 +13,7 @@
 			     	 氏名
 			    </th>
 			    <td>
+			    	<form:errors path="name" element="div"/>
 			    	<form:input path="name"  placeholder="Name"/>
 			    </td>
 			  </tr>
@@ -20,6 +22,7 @@
 			      	メールアドレス
 			    </th>
 			    <td>
+			    	<form:errors path="mailAddress" element="div"/>
 			    	<form:input path="mailAddress" placeholder="Email"/>
 			    </td>
 			  </tr>
@@ -28,6 +31,7 @@
 			     	 パスワード
 			    </th>
 			    <td>
+			    	<form:errors path="password" element="div"/>
 			    	<form:password path="password" placeholder="Password"/>
 			    </td>
 			  </tr>
