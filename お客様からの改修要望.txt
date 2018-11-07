@@ -6,7 +6,7 @@
 方です。深く悩まず周りや講師に確認しながら中級問題までは、
 期日(2日間)を意識して進めてください。
 
-【環境構築の仕方】
+【環境構築の仕方】a
 　・c:/env/springworkspace内でGitBashを起動する
 　・https://github.com/igamasayuki/stock-management-bugfix-spring
 　　にアクセスし、GitのURLをコピーする
