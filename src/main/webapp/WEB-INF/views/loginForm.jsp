@@ -13,7 +13,6 @@
 			    	 メールアドレス
 			    </th>
 			    <td>
-			    	<p><c:out value="${message2}"/></p>
 			    	<form:input path="mailAddress" placeholder="Email"/>
 			    	<form:errors path="mailAddress" />
 			    </td>

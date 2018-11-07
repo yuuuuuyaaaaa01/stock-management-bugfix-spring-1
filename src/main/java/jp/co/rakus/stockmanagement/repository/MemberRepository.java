@@ -1,5 +1,7 @@
 package jp.co.rakus.stockmanagement.repository;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class MemberRepository {
 		String password = rs.getString("password");
 		return new Member(id, name, mailAddress, password);
 	};
+
+	
 	
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -68,23 +72,16 @@ public class MemberRepository {
 	public Member save(Member member) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(member);
 		
-		String mail = findByEmail(member);//既に登録されていれば値を返す
-		System.out.println("mail="+mail);
+		//String mail = findByEmail(member);//既に登録されていれば値を返す
+		//System.out.println("mail="+mail);
 		
 		if (member.getId() == null) {
 			
-			if(mail == null) { // null であれば、実行。
 			jdbcTemplate.update(
 					"INSERT INTO members(name,mail_address,password) values(:name,:mailAddress,:password)", 
 					param);
-			}else {
-				String message2 = null;
-				message2 = "既に登録されています";
-				session.setAttribute("message2",message2);		
 				
 				return member;
-			}
-			
 			
 		} else {
 			jdbcTemplate.update(
@@ -101,11 +98,18 @@ public class MemberRepository {
 	 * @param member
 	 * @return
 	 */
-	public String findByEmail(Member member) {
-		String sql = "select mail_address from members where mail_address=:mailAddress;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress",member.getMailAddress());
-		String mail = jdbcTemplate.queryForObject(sql, param, String.class);
-		return mail;
+	
+	public List<Member> findByEmail(String mail_address) {
+		String sql = "select id,name,mail_address,password from members where mail_address=:mailAddress;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress",mail_address);
+		
+		List<Member> member = jdbcTemplate.query(sql, param,MEMBER_ROW_MAPPER); 
+		
+		return member;
+			
+			
+
+		
 	}
 	
 	

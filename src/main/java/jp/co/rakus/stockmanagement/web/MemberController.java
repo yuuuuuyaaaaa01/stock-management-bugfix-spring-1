@@ -1,5 +1,9 @@
 package jp.co.rakus.stockmanagement.web;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +30,9 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private HttpSession session;
+	
 	/**
 	 * フォームを初期化します.
 	 * @return フォーム
@@ -63,9 +70,16 @@ public class MemberController {
 		Member member = new Member();
 		BeanUtils.copyProperties(form, member);
 		
-		
+		List<Member> memberanswer = memberService.findByEmail(member.getMailAddress());
+				
+		if(memberanswer.isEmpty() ) {
 		memberService.save(member);
-		return "redirect:/";
+		}else{
+			String message = "既に登録されています";
+			result.rejectValue("mailAddress", null, message);
+		} 
+		
+		return "/member/form";
 	}
 	
 }
