@@ -52,13 +52,13 @@ public class MemberController {
 	 * @return ログイン画面
 	 */
 	@RequestMapping(value = "create")
+	@Transactional
 	public String create(@Validated MemberForm form,BindingResult result, 
 			Model model) {
 		
 		if(result.hasErrors()) {
 			return "/member/form";
 		}
-		
 		
 		Member member = new Member();
 		BeanUtils.copyProperties(form, member);
