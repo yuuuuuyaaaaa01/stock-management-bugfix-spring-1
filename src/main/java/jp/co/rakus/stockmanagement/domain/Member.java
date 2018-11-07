@@ -13,6 +13,17 @@ public class Member {
 	private String mailAddress;
 	/** パスワード */
 	private String password;
+	/** 確認用パスワード**/
+	private String confirm_password;
+	
+	
+	public String getConfirm_password() {
+		return confirm_password;
+	}
+	public void setConfirm_password(String confirm_password) {
+		this.confirm_password = confirm_password;
+	}
+	
 	public Member() {}
 	public Member(Integer id, String name, String mailAddress, String password) {
 		super();

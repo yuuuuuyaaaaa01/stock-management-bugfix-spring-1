@@ -22,6 +22,18 @@ public class MemberForm {
 	@NotBlank(message = "パスワードは必須項目です")
 	@Size(min=1,max=50,message="パスワードは1文字以上、50文字以内で記載してください")
 	private String password;
+	
+	private String confirm_password;
+	
+	
+	
+	
+	public String getConfirm_password() {
+		return confirm_password;
+	}
+	public void setConfirm_password(String confirm_password) {
+		this.confirm_password = confirm_password;
+	}
 	public String getName() {
 		return name;
 	}

@@ -71,14 +71,23 @@ public class MemberController {
 		BeanUtils.copyProperties(form, member);
 		
 		List<Member> memberanswer = memberService.findByEmail(member.getMailAddress());
-				
+		
+		System.out.println(member.getPassword() + "new" + member.getConfirm_password());
+		
+		if( !(member.getPassword().equals(member.getConfirm_password())) ) {
+			String confirm_password = "パスワードが違います";
+			result.rejectValue("confirm_password", null,confirm_password);
+			return "/member/form";
+		}
+		
 		if(memberanswer.isEmpty() ) {
 		memberService.save(member);
 		}else{
 			String message = "既に登録されています";
 			result.rejectValue("mailAddress", null, message);
-		} 
+		}
 		
+	
 		return "/member/form";
 	}
 	

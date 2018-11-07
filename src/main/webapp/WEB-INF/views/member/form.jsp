@@ -32,8 +32,18 @@
 			    </th>
 			    <td>
 			    	<form:errors path="password" element="div"/>
-			    	<form:password path="password" placeholder="Password"/>
+			    	<form:password path="password" placeholder="Password"/>  	
 			    </td>
+			   </tr>
+			   <tr>
+			    <th>
+			     	 パスワード確認
+			    </th>
+			    <td>
+			    	<form:errors path="confirm_password" element="div"/>
+			    	<form:password path="confirm_password" placeholder="confirm_password"/>
+			    </td>
+			   
 			  </tr>
 			  <tr>
 			  	<td></td>

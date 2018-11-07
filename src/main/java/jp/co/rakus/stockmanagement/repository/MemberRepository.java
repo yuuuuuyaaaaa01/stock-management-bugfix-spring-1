@@ -106,12 +106,10 @@ public class MemberRepository {
 		
 		List<Member> member = jdbcTemplate.query(sql, param,MEMBER_ROW_MAPPER); 
 		
-		return member;
-			
-			
-
-		
+		return member;		
 	}
+	
+	
 	
 	
 	
