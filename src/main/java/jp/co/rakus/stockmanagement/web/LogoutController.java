@@ -29,5 +29,4 @@ public class LogoutController {
 		sessionStatus.setComplete();
 		return "redirect:/";
 	}
-
 }

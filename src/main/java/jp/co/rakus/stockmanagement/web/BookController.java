@@ -1,5 +1,7 @@
 package jp.co.rakus.stockmanagement.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -15,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.rakus.stockmanagement.domain.Book;
 import jp.co.rakus.stockmanagement.service.BookService;
@@ -105,24 +109,40 @@ public class BookController {
 		 Date formatDate = sdf2.parse(date);// String をdate に変換 
 		
 		Book book = new Book();
+		BeanUtils.copyProperties(form, book); 
 		
 		Book maxBook = bookService.findByMaxId();//最新のidを取得
 		Integer maxId = (maxBook.getId()+1);
+		
+		java.io.File file  = new java.io.File(form.getImage().getOriginalFilename());
+		
+		String fileName = form.getImage().getOriginalFilename();
+		System.out.println("fileName="+fileName);
+		
+		try {
+			   form.getImage().transferTo( new File("src/main/webapp/img/"+fileName) );
+			   
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+   	
 		
 		
 		
 		book.setSaledate(formatDate);//formはString,domainはdateなので、自分でセット。
 		book.setId(maxId);
-		
-		System.out.println("max="+maxId);
-		System.out.println("bookId="+book.getId());
-		
-		BeanUtils.copyProperties(form, book); 
+		book.setImage(form.getImage().getOriginalFilename());
 		
 		bookService.save(book);
 		
-		return "book/insert";
+		return "book/list";
 	}
+	
+	
+
+	
 	
 	
 

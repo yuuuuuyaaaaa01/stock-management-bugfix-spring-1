@@ -1,5 +1,6 @@
 package jp.co.rakus.stockmanagement.web;
 
+import org.springframework.web.multipart.MultipartFile;
 
 public class InsertForm {
 	private Integer id;
@@ -8,25 +9,26 @@ public class InsertForm {
 	private String publisher;
 	private Integer price;
 	private String isbncode;
-	private String saledate; //stringで受け取る？
+	private String saledate; 
 	private String explanation;
 	private Integer stock;
 	
-	private String image;
+	private MultipartFile image;
+	//private String image;
 	
 	
-	public String getImage() {
+	
+	public MultipartFile getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(MultipartFile image) {
 		this.image = image;
 	}
-	
-	
 	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}

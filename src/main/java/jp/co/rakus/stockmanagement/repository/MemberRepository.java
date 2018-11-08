@@ -67,6 +67,26 @@ public class MemberRepository {
 			return null;
 		}
 	}
+	
+	
+	public Member findByPassword(String password) {
+		
+		Member member = null;
+		try{
+			SqlParameterSource param = new MapSqlParameterSource().addValue("password", password);
+			member = jdbcTemplate.queryForObject(
+					"SELECT id,name,mail_address,password FROM members WHERE mail_address= :mailAddress and password=:password",
+					param, 
+					MEMBER_ROW_MAPPER);
+			
+			return member;
+		} catch(DataAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 
 	/**
 	 * メンバー情報を保存　または　更新する.
@@ -100,7 +120,7 @@ public class MemberRepository {
 	 * email が既に登録されているか確認.saveメソッドを実行.
 	 * 
 	 * @param member
-	 * @return
+	 * @return 存在している：メンバー情報　　存在していない場合：null
 	 */
 	
 	public Member findByEmail(String mail_address) {
@@ -109,12 +129,14 @@ public class MemberRepository {
 		
 		List<Member> members = jdbcTemplate.query(sql,param,MEMBER_ROW_MAPPER); 
 		
-		Member member1 = new Member();
-		for(Member member:members) {
-			member1 = member;
+		if(members.isEmpty()) {
+			return null;
+		}else {
+			Member member = members.get(0);
+			return member;
 		}
 		
-		return member1;		
+		
 	}
 
 	

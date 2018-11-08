@@ -11,7 +11,7 @@
 	<div class="span8">
 		<div class="row">
 		
-			<form:form modelAttribute="insertForm" action="${pageContext.request.contextPath}/book/save" method="POST">
+			<form:form modelAttribute="insertForm" action="${pageContext.request.contextPath}/book/save" enctype="multipart/form-data" method="POST">
 			<form:errors path="bookForm.*" />
 			<table class="table table-striped">
 			  <tr>
@@ -75,7 +75,7 @@
 			      画像
 			    </th>
 			    <td>
-			      <form:input path="image"/>
+			      <form:input path="image" type="file"/>
 			    </td>
 			  </tr>
 		  
