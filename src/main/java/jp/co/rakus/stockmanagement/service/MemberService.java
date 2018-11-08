@@ -35,7 +35,7 @@ public class MemberService {
 		return memberRepository.save(member);
 	}
 	
-	public List<Member> findByEmail(String mail_address) {
+	public Member findByEmail(String mail_address) {
 		return memberRepository.findByEmail(mail_address);
 	}
 	

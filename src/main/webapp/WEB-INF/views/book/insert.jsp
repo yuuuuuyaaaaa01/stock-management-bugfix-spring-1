@@ -3,12 +3,15 @@
 <%@ include file="../common/common.jsp"  %>
 <body>
 <div class="container">
+
 	<c:out value="${member.name}"/>さん　こんにちは！<br>
 	<a href="${pageContext.request.contextPath}/book/list">書籍一覧へ</a>
 	<a href="${pageContext.request.contextPath}/logout/sessionInvalidate">ログアウト</a>
-	<h3>書籍在庫数変更画面</h3>
+	<h3>書籍追加画面</h3>
 	<div class="span8">
 		<div class="row">
+		
+			<form:form modelAttribute="insertForm" action="${pageContext.request.contextPath}/book/save" method="POST">
 			<form:errors path="bookForm.*" />
 			<table class="table table-striped">
 			  <tr>
@@ -16,7 +19,7 @@
 			      書籍名
 			    </th>
 			    <td>
-			      <c:out value="${book.name}"/>
+			      <form:input path="name"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -24,7 +27,7 @@
 			      著者
 			    </th>
 			    <td>
-			    	<c:out value="${book.author}"/>
+			      <form:input path="author"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -32,7 +35,7 @@
 			      出版社
 			    </th>
 			    <td>
-			    <c:out value="${book.publisher}"/>
+			   	<form:input path="publisher"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -40,7 +43,7 @@
 			      価格
 			    </th>
 			    <td>
-			       <fmt:formatNumber value="${book.price}" pattern="###,###"/>円
+			    	<form:input path="price"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -48,7 +51,7 @@
 			      ISBNコード
 			    </th>
 			    <td>
-			      <c:out value="${book.isbncode}"/>
+			      <form:input path="isbncode"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -56,7 +59,7 @@
 			      発売日
 			    </th>
 			    <td>
-			      <fmt:formatDate value="${book.saledate}" pattern="yyyy年MM月dd日"/>
+			      <form:input path="saledate" type="date"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -64,7 +67,7 @@
 			      説明
 			    </th>
 			    <td> 
-			      <c:out value="${book.explanation}"/>
+			      <form:input path="explanation"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -72,25 +75,29 @@
 			      画像
 			    </th>
 			    <td>
-			      <img src="img/<c:out value="${book.image}"/>"/>
+			      <form:input path="image"/>
 			    </td>
 			  </tr>
+		  
 			  <tr>
 			    <th>
 			      在庫数
 			    </th>
 			    <td>
-			    	<form:errors path="bookForm.*"/>
-					<form action="/book/update" method="post">
-						<input type="text" name="stock"  value="<c:out value="${book.stock}"/>">
-						<input type="hidden" name="id" value="<c:out value="${book.id}"/>">
-						<input class="btn" type="submit" value="更新">
-					</form>
+					<form:input path="stock"/>
 			    </td>
 			  </tr>
+			  
 			</table>
+			
+			<input type="submit" value="本を追加する"/>
+			
+			</form:form>
+			
 		</div>
-	</div>
+	</div>	
+
+	
 </div>
 </body>
 </html>

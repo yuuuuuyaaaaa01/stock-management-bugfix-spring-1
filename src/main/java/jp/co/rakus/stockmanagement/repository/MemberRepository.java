@@ -1,5 +1,8 @@
 package jp.co.rakus.stockmanagement.repository;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
+import java.awt.print.Book;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -100,17 +103,20 @@ public class MemberRepository {
 	 * @return
 	 */
 	
-	public List<Member> findByEmail(String mail_address) {
+	public Member findByEmail(String mail_address) {
 		String sql = "select id,name,mail_address,password from members where mail_address=:mailAddress;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress",mail_address);
 		
-		List<Member> member = jdbcTemplate.query(sql, param,MEMBER_ROW_MAPPER); 
+		List<Member> members = jdbcTemplate.query(sql,param,MEMBER_ROW_MAPPER); 
 		
-		return member;		
+		Member member1 = new Member();
+		for(Member member:members) {
+			member1 = member;
+		}
+		
+		return member1;		
 	}
-	
-	
-	
+
 	
 	
 	

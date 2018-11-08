@@ -56,4 +56,14 @@ public class Member {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
+				+ ", confirm_password=" + confirm_password + ", getConfirm_password()=" + getConfirm_password()
+				+ ", getId()=" + getId() + ", getName()=" + getName() + ", getMailAddress()=" + getMailAddress()
+				+ ", getPassword()=" + getPassword() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+	
+	
 }

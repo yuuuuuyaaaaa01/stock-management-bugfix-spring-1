@@ -3,8 +3,6 @@ package jp.co.rakus.stockmanagement.repository;
 import java.util.Date;
 import java.util.List;
 
-import jp.co.rakus.stockmanagement.domain.Book;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -12,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+
+import jp.co.rakus.stockmanagement.domain.Book;
 
 /**
  * booksテーブル操作用のリポジトリクラス.
@@ -22,6 +22,8 @@ public class BookRepository {
 	/**
 	 * ResultSetオブジェクトからBookオブジェクトに変換するためのクラス実装&インスタンス化
 	 */
+	
+	
 	private static final RowMapper<Book> BOOK_ROW_MAPPER = (rs, i) -> {
 		Integer id = rs.getInt("id");
 		String name = rs.getString("name");
@@ -56,6 +58,21 @@ public class BookRepository {
 		return book;
 	}
 	
+	
+	/**
+	 * 最大値を返す.
+	 * 
+	 * @return
+	 */
+	public Book findByMaxId() {
+		SqlParameterSource param = new MapSqlParameterSource();
+		String sql = "select * from books where id=(select max(id) from books)";			
+		Book book = jdbcTemplate.queryForObject(sql,param,BOOK_ROW_MAPPER);		
+		return book;
+	}
+	
+	
+	/*
 	public Book update(Book book) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
 		if (book.getId() == null) {
@@ -66,4 +83,32 @@ public class BookRepository {
 				param);
 		return book;
 	}
+	*/
+	
+	/**
+	 * 本を追加する.
+	 * 
+	 * @param book
+	 * @return
+	 */
+	public Book save(Book book) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
+		if (book.getId() == null) {		
+			jdbcTemplate.update(
+					"INSERT INTO books(id,name,author,publisher,price,isbncode,saledate,explanation,image,stock)VALUES(:id,:name,:author,:publisher,:price,:isbncode,:saledate,:explanation,:image,:stock)", 
+					param);
+				
+				return book;
+			
+		} else {
+			jdbcTemplate.update(
+					"UPDATE books SET stock=:stock WHERE id=:id", 
+					param);
+		}
+		return book;
+	}
+	
+	
+	
+	
 }

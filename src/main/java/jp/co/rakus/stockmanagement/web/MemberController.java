@@ -70,7 +70,8 @@ public class MemberController {
 		Member member = new Member();
 		BeanUtils.copyProperties(form, member);
 		
-		List<Member> memberanswer = memberService.findByEmail(member.getMailAddress());
+		Member memberanswer = memberService.findByEmail(member.getMailAddress());
+		String mail = memberanswer.getMailAddress();		
 		
 		System.out.println(member.getPassword() + "new" + member.getConfirm_password());
 		
@@ -80,12 +81,15 @@ public class MemberController {
 			return "/member/form";
 		}
 		
-		if(memberanswer.isEmpty() ) {
-		memberService.save(member);
-		}else{
+		if(mail != null ) {
 			String message = "既に登録されています";
 			result.rejectValue("mailAddress", null, message);
+		}else {
+			memberService.save(member);
 		}
+		
+		
+	
 		
 	
 		return "/member/form";
