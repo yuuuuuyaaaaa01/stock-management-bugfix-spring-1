@@ -71,8 +71,6 @@ public class MemberController {
 			result.rejectValue("mailAddress", null, message);
 		}
 		
-//		System.out.println(form.getPassword() + "new" + form.getConfirm_password());
-		
 		if( !(form.getPassword().equals(form.getConfirm_password())) ) {
 			String confirm_password = "パスワードが違います";
 			result.rejectValue("confirm_password", null,confirm_password);
@@ -83,43 +81,23 @@ public class MemberController {
 			return "/member/form";
 		}
 		
-		
+		//パスワードのキー？を生成
 	    final String salt = BCrypt.gensalt();
-	    System.out.println("生成したソルト = " + salt);
-	 
+	    //form jsp から送られてくるパスワードを Bcryptのキーを基にハッシュ化
 	    final String hashedPasswordWithSalt = BCrypt.hashpw(form.getPassword(), salt);
 	    System.out.println("ハッシュ化したパスワード = " + hashedPasswordWithSalt);
-	 
-	    // hashedPasswordWithSaltをDBに格納
-	    // ここでは省略
-	    // something(hashedPasswordWithSalt);
-	    
-	    // DBからhashedPasswordWithSaltを取り出す
-	    // ここでは省略。取り出したことにして代入
-	    final String passwordInDB = hashedPasswordWithSalt;
-	 
 	    // パスワードの検証
-	    final boolean checkResult = BCrypt.checkpw("hogePassword1234", passwordInDB);
+	    final boolean checkResult = BCrypt.checkpw("hogePassword1234", form.getPassword());
 	    System.out.println("hogePassword1234の検証結果 = " + checkResult);
-	 
-	    // 誤ったパスワードの場合
-	    final boolean checkResult2 = BCrypt.checkpw("hogePassword12345678", passwordInDB);
-	    System.out.println("hogePassword12345678の検証結果 = " + checkResult2);
-	 
 		
 		Member member = new Member();
-		member.setPassword(hashedPasswordWithSalt);
+		member.setPassword(hashedPasswordWithSalt);//member にパスワードにハッシュパスをセットする
 		member.setName(form.getName());
 		member.setMailAddress(form.getMailAddress());
 		
-		
 		//BeanUtils.copyProperties(form, member);
-		memberService.save(member);
+		memberService.save(member);//ハッシュ化したパスが入っているmemberをsaveメソッドへを送る
 		
-		
-		System.out.println("pass="+member.getPassword());
-		
-	
 		return "redirect:/";
 	}
 	

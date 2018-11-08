@@ -58,23 +58,19 @@ public class LoginController {
 	@RequestMapping(value = "/login")
 	public String login(@Validated LoginForm form,
 			BindingResult result, Model model) {
-		if (result.hasErrors()){
-			return index();
-		}
-				
-		String mailAddress = form.getMailAddress();
 	
-		//メールアドレスを基にemailを引っ張ってくる
+		String mailAddress = form.getMailAddress();
+		
+		//ログインフォームから送られてきたメールアドレスを基に、該当する一意のメンバーを引っ張ってくる
 		Member getMemberByEmail = memberService.findByEmail(form.getMailAddress());
-		
-		//hashのパスワードを保存
-		String hashpass = getMemberByEmail.getPassword();
-		
+		//getMemberByEmailを基に、DBの暗号化されたパスワードを引っ張ってくる
+		String dbHashpass = getMemberByEmail.getPassword();
+		//暗号化したパスワード認証は、falseにセットする
 		boolean checkResult = false;
-		
-		//true だったらパスワードで比較
-		if( checkResult = BCrypt.checkpw(form.getPassword(), hashpass)) {
-		Member member = memberService.findOneByMailAddressAndPassword(mailAddress, hashpass);
+		//ログインした暗号化されていないパスワードと、DBの暗号化されたパスワードを比較。あっていればtrueを返却する
+		// true の時は、メールアドレスとパスワードのチェックを行う
+		if( checkResult = BCrypt.checkpw(form.getPassword(), dbHashpass)) {
+		Member member = memberService.findOneByMailAddressAndPassword(mailAddress, dbHashpass);
 		if (member == null) {
 			ObjectError error = new ObjectError("loginerror", "メールアドレスまたはパスワードが違います。");
             result.addError(error);
@@ -86,9 +82,9 @@ public class LoginController {
 				result.rejectValue("password",null,password);
 			return "redirect:/login";
 		}
-		
-		
-		
+		if (result.hasErrors()){
+			return index();
+		}
 		
 		return "redirect:/book/list";
 	}
