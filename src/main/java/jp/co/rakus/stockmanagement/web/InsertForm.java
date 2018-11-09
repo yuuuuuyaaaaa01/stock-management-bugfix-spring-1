@@ -18,15 +18,18 @@ public class InsertForm {
 	
 	
 	
-	public MultipartFile getImage() {
-		return image;
-	}
-	public void setImage(MultipartFile image) {
-		this.image = image;
-	}
+	
 	
 	public Integer getId() {
 		return id;
+	}
+
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 
 	public void setId(Integer id) {
